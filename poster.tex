@@ -64,7 +64,8 @@
   \usepackage{amssymb,amsmath,amsthm,amsfonts}
   \usepackage{tikz}
   \usepackage{caption}
-  \usepackage{minted}
+  \usepackage{listings}
+  \usepackage{fancyvrb}
   \captionsetup{font=normalsize, labelfont=normalsize}
 
 
@@ -88,7 +89,7 @@
 \setlength{\belowcaptionskip}{2ex} % White space under figures
 \setlength\belowdisplayshortskip{2ex} % White space under equations
 
-\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+\begin{frame}[t, fragile] % The whole poster is enclosed in one beamer frame
 \begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice
 \begin{column}{\sepwid}\end{column} % Empty spacer column
 
@@ -120,23 +121,23 @@
   \end{block}
 
   \begin{block}{Usage}\label{usage}
-    \begin{minted}{json}
-      "graph": {
-            "0_3": {
-              "right": [9, "1_3"]
-            },
-            "3_3": {},
-            "1_1": {
-              "down": [-6, "1_2"],
-              "right": [4, "2_1"]
-            },
-            "1_2": {
-              "down": [3, "1_3"],
-              "right": [-7, "2_2"]
-            },
-        ...
-      }
-    \end{minted}
+    \begin{Verbatim}[fontsize=\small]
+    "graph": {
+      "0_3": {
+        "right": [9, "1_3"]
+      },
+      "3_3": {},
+      "1_1": {
+        "down": [-6, "1_2"],
+        "right": [4, "2_1"]
+      },
+      "1_2": {
+        "down": [3, "1_3"],
+        "right": [-7, "2_2"]
+      },
+      ...
+    }
+    \end{Verbatim}
   \end{block}
 
 \end{column} % End column 1
@@ -200,13 +201,13 @@
 \begin{column}{\onecolwid} % Begin column 3
 
   \begin{block}{Experiment}\label{experiment}
-    We used the Mouselab-MDP plugin for JsPsych. In each trial participants route an airplane from the center of the screen to one of eight final destinations via two intermediate locations (see Figure \ref{fig:Screenshots}a). We specified \texttt{stateLabels} as the rewards associated with the edge leading to each state. We set \texttt{stateDisplay} to `click' and `stateClickCost' to 0.10; thus participants could click on a state to reveal the reward for traveling to that state, at the price of $\$0.10$. Participants were required to spend at least $45$ seconds on every trial to prevent time cost from discouraging participants from clicking and planning.
+  We used the Mouselab-MDP plugin for JsPsych. In each trial participants route an airplane from the center of the screen to one of eight final destinations via two intermediate locations (see Figure \ref{fig:Screenshots}a). We specified \texttt{stateLabels} as the rewards associated with the edge leading to each state. We set \texttt{stateDisplay} to `click' and `stateClickCost' to 0.10; thus participants could click on a state to reveal the reward for traveling to that state, at the price of $\$0.10$. Participants were required to spend at least $45$ seconds on every trial to prevent time cost from discouraging participants from clicking and planning. 
+
   \end{block}
 
   \begin{alertblock}{Results}\label{results}
     \begin{itemize}
-      \item Pseudo-rewards improved the \textbf{quality} and \textbf{speed} of participant's decisions (Fig.~2).
-      \item Pseudo-rewards facilitated \textbf{hierarchical decomposition} of the planning problem, as evidenced by reaction times (Fig.~3).
+      \item Something about pruning.
     \end{itemize}
   \end{alertblock}
 
@@ -239,6 +240,6 @@
 
 \end{columns} % End of all the columns in the poster
 
-\end{frame} % End of the enclosing frame
+\end{frame}
 
 \end{document}
