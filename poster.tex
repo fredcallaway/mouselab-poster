@@ -26,6 +26,7 @@
   \usepackage[scale=1.2]{beamerposter} % Use the beamerposter package for laying out the poster
   \usepackage{mathtools,amsmath}
 
+
   \usetheme{confposter} % Use the confposter theme supplied with this template
   \setbeamercolor{block example title}{fg=white,bg=calblue}
   \setbeamercolor{block title}{fg=calblue,bg=white} % Colors of the block titles
@@ -66,7 +67,10 @@
   \usepackage{caption}
   \usepackage{listings}
   \usepackage{fancyvrb}
+  \usepackage{subcaption}
   \captionsetup{font=normalsize, labelfont=normalsize}
+
+  % \setlength{\parskip}{10cm}
 
 
 \title{Mouselab-MDP: A new paradigm for tracing how people plan}
@@ -99,8 +103,10 @@
 
 \begin{column}{\onecolwid} % Begin column 1
   \begin{block}{Motivation}\label{Motivation}
-    Planning is a latent cognitive process that cannot be observed directly. This makes it difficult to study how people plan.
-    To address this problem, we propose a new paradigm that provides experimenters with a timecourse of participant attention to information in the task environment.
+    Planning is a latent cognitive process that cannot be observed directly.
+    This makes it difficult to study how people plan.
+    To address this challenge, we propose a new paradigm that provides experimenters with a timecourse of participant attention to information in the task environment.
+
   \end{block}
 
   % \begin{alertblock}{Key findings}\label{key-findings}
@@ -113,30 +119,32 @@
   % \end{alertblock}
 
   \begin{block}{Background}\label{Background}
-    Planning is a fundamental aspect of higher-order cognition, and it has accordingly received much attention in cognitive psychology.
-    Research on planning is complicated by the fact that we cannot directly observe the cognitive processes of planning.
-    One approach to this problem is to design \emph{process tracing} paradigms that externalize some aspect of the cognitive process. \citeA{Payne1988} developed one such methodology for studying multi-alternative risky choice: the ``Mouselab'' paradigm.
-    Thus, to apply the Mouselab process tracing method to planning, we simply replace the single decision with a Markov Decision Process (MDP), in which a participant must make a sequence of choices, each one affecting the choices that will be available in the future.
-    Something about pruning?
+    Many problems that people face require planning many steps into the future. Brute force search quickly becomes computationally intractable, thus people must rely on \textbf{approximate planning strategies}. Characterizing these strategies is difficult becaues we cannot directly observe the search process. For example, although \citeA{Huys2015} successfully modeled a \textbf{pruning} strategy as discounting rewards after large penalties, they could not provide a detailed process model based on beahvioral data alone.
+
+    \textbf{Process tracing paradigms} such as think-aloud protocols and eye tracking externalize some aspect of a cognitive process. \citeA{Payne1988} developed one such methodology for studying multi-alternative risky choice: In the ``Mouselab'' paradigm, a participant clicks on the cells of a matrix to inform a betting decision.
   \end{block}
 
   \begin{block}{Usage}\label{usage}
-    \begin{Verbatim}[fontsize=\small]
-    "graph": {
-      "0_3": {
-        "right": [9, "1_3"]
-      },
-      "3_3": {},
-      "1_1": {
-        "down": [-6, "1_2"],
-        "right": [4, "2_1"]
-      },
-      "1_2": {
-        "down": [3, "1_3"],
-        "right": [-7, "2_2"]
-      },
-      ...
-    }
+    This CofeeScript code generates Fig.~\ref{fig:simple}
+    \begin{Verbatim}[fontsize=\tiny]
+      trial =
+        type: 'mouselab-mdp'  # use the jspsych plugin
+        graph:  # defines transition and reward functions
+          B:
+            up: [5, 'A']
+            down: [-5, 'C']
+          A: {}
+          C: {}
+        layout:  # defines position of states
+          A: [1, 1]
+          B: [1, 2]
+          C: [1, 3]
+        initial: 'B'  # initial state of player
+        stateLabels: {A: 'A', B: 'B', C: 'C'}
+        stateDisplay: 'always'  # options: never, hover, click, always
+        edgeLabels: 'reward'  # can also be an arbitrary mapping
+        edgeDisplay: 'click'  # options: never, hover, click, always
+        edgeClickCost: 1  # subtracted from score every time an edge is clicked
     \end{Verbatim}
   \end{block}
 
@@ -147,53 +155,106 @@
 \begin{column}{\twocolwid} % Begin column 2
 
   \begin{figure}
-    % \label{fig:paradigm}
-    \includegraphics[width=0.9\linewidth]{figs/heart.png}
+    \label{fig:main}
+    \includegraphics[width=0.85\linewidth]{figs/example1.png}
     % \captionsetup{width=0.9\linewidth}
     % \caption[first]{Web of Cash experimental interface.}
   \end{figure}
 
-  % \vspace{-1cm}
+  \vspace{-1cm}
 
-  \begin{columns}[t,totalwidth=\twocolwid] % Split column 2 into 2.1 and 2.2
+  \begin{figure}
+    \centering
+    \begin{subfigure}{.28\textwidth}
+      \centering
+      \includegraphics[height=10cm]{figs/simple.png}
+      \caption{}
+      % \caption{\textbf{Usage} example}
+      \label{fig:simple}
+    \end{subfigure}
+    \begin{subfigure}{.38\textwidth}
+      \centering
+      \includegraphics[height=10cm]{figs/heart.png}
+      \caption{}
+      % \caption{Large environments can be programatically generated.}
+      \label{fig:heart}
+    \end{subfigure}
+    \begin{subfigure}{.28\textwidth}
+      \centering
+      \includegraphics[height=10cm]{figs/grid2.png}
+      \caption{}
+      % \caption{Rewards can be displayed always, after being clicked, or only on hover.}
+      \label{fig:hover}
+    \end{subfigure}
+    \caption{(a) example in \textbf{Usage}; (b) a programatically generated layout; (c) rewards displayed on hover.}
+    \label{fig:test}
+  \end{figure}
+
+
+  \begin{figure}
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+      \centering
+      \label{fig:click_heat}
+      \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
+      \caption{}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+      \centering
+      \label{fig:click_sets}
+      \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
+      \caption{}
+    \end{subfigure}
+    % \captionsetup{width=0.9\linewidth}
+    \caption[first]{Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. (a) Colors indicate how often each state was inspected before the first move, for four MDPs. b) The four most common click sets for one MDP. Inspected states are gold.}
+  \end{figure}
+
+
+  % \begin{figure}
+  %   \centering
+  %   \begin{minipage}{.3\textwidth}
+  %     \centering
+  %     \includegraphics[height=10cm]{figs/simple.png}
+  %     \captionof{figure}{Example from \textbf{Usage}}
+  %     \label{fig:simple}
+  %   \end{minipage}%
+  %   \begin{minipage}{.4\textwidth}
+  %     \centering
+  %     \includegraphics[height=10cm]{figs/heart.png}
+  %     \captionof{figure}{Large environments can be programatically generated.}
+  %     \label{fig:heart}
+  %   \end{minipage}%
+  %   \begin{minipage}{.3\textwidth}
+  %     \centering
+  %     \includegraphics[height=10cm]{figs/grid2.png}
+  %     \captionof{figure}{Rewards can be displayed always, after being clicked, or only on hover.}
+  %     \label{fig:hover}
+  %   \end{minipage}
+  % \end{figure}
+
+
+
+  % \begin{columns}[t,totalwidth=\twocolwid] % Split column 2 into 2.1 and 2.2
     
-    \begin{column}{\onecolwid} % Begin column 2.1
+    % \begin{column}{\onecolwid} % Begin column 2.1
       
-      \begin{figure}
-        % \label{fig:paradigm}
-        \includegraphics[width=0.9\linewidth]{figs/paradigm_illustration1.png}
-        % \captionsetup{width=0.9\linewidth}
-        % \caption[first]{Web of Cash experimental interface.}
-      \end{figure}
       
-      \begin{figure}
-        % \label{fig:paradigm}
-        \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
-        % \captionsetup{width=0.9\linewidth}
-        % \caption[first]{Web of Cash experimental interface.}
-      
-      \end{figure}
-    \end{column} % End column 2.1
 
-    \begin{column}{\onecolwid} % Begin column 2.2
-     
-      \begin{figure}
-        % \label{fig:paradigm}
-        \includegraphics[width=0.9\linewidth]{figs/paradigm_illustration2.png}
-        % \captionsetup{width=0.9\linewidth}
-        % \caption[first]{Web of Cash experimental interface.}
-      \end{figure}
+    % \end{column} % End column 2.1
 
-      \begin{figure}
-        % \label{fig:paradigm}
-        \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
-        % \captionsetup{width=0.9\linewidth}
-        % \caption[first]{Web of Cash experimental interface.}
-      \end{figure}
+  %   \begin{column}{\onecolwid} % Begin column 2.2
+
+
+  %     % \begin{figure}
+  %     %   % \label{fig:paradigm}
+  %     %   \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
+  %     %   % \captionsetup{width=0.9\linewidth}
+  %     %   % \caption[first]{Web of Cash experimental interface.}
+  %     % \end{figure}
     
-    \end{column} % End column 2.2
+  %   \end{column} % End column 2.2
 
-  \end{columns}
+  % \end{columns}
 
 \end{column} % End column 2
 %------------------------------------------------------------------------------
@@ -201,21 +262,23 @@
 \begin{column}{\onecolwid} % Begin column 3
 
   \begin{block}{Experiment}\label{experiment}
-  We used the Mouselab-MDP plugin for JsPsych. In each trial participants route an airplane from the center of the screen to one of eight final destinations via two intermediate locations (see Figure \ref{fig:Screenshots}a). We specified \texttt{stateLabels} as the rewards associated with the edge leading to each state. We set \texttt{stateDisplay} to `click' and `stateClickCost' to 0.10; thus participants could click on a state to reveal the reward for traveling to that state, at the price of $\$0.10$. Participants were required to spend at least $45$ seconds on every trial to prevent time cost from discouraging participants from clicking and planning. 
+  To demonstrate the paradigm in action, we designed a layout that encourages pruning (center image). 31 participants completed the online experiment. We set \texttt{stateLabels} to be the rewards associated with the edge leading to each state. We set \texttt{stateDisplay} to `click' and \texttt{stateClickCost} to 0.10; thus participants could click on a state to reveal the reward for traveling to that state, at the price of $\$0.10$. Participants were required to spend at least $45$ seconds on every trial to prevent time cost from discouraging participants from clicking and planning.
+
+  Our results provide \textbf{direct evidence of pruning}: participants were less likely to click on states after large rewards (Fig.~2). This effect \textbf{varies smoothly with reward} (Fig.~3).
 
   \end{block}
 
-  \begin{alertblock}{Results}\label{results}
-    \begin{itemize}
-      \item Something about pruning.
-    \end{itemize}
-  \end{alertblock}
+  % \begin{alertblock}{Results}\label{results}
+  %   \begin{itemize}
+  %     \item Something about pruning.
+  %   \end{itemize}
+  % \end{alertblock}
 
   \begin{figure}
-    % \label{fig:paradigm}
+    \label{fig:pruning}
     \includegraphics[width=0.9\linewidth]{figs/prunning_any_noFB.png}
-    % \captionsetup{width=0.9\linewidth}
-    % \caption[first]{Web of Cash experimental interface.}
+    \captionsetup{width=0.9\linewidth}
+    \caption[first]{Frequency of pruning $\pm 1 \text{SEM}$ given the reward at the stem of the branch (horizontal axis). Pruning was defined as inspecting none of a branch's outer states (before the second move) after having inspected the reward at its stem (before the first move).}
   \end{figure}
 
   \begin{block}{References}\label{references}
