@@ -68,6 +68,7 @@
   \usepackage{listings}
   \usepackage{fancyvrb}
   \usepackage{subcaption}
+  \usepackage{natbib}
   \captionsetup{font=normalsize, labelfont=normalsize}
 
   % \setlength{\parskip}{10cm}
@@ -105,8 +106,8 @@
   \begin{block}{Contribution}\label{contribution}
     Planning is a latent cognitive process that cannot be observed directly.
     To address this challenge, we propose a new paradigm that tracks participants' information gathering in a planning task.
-    We release the paradigm open-source as a JsPsych plugin \cite{DeLeeuw2015}.
-    The flexible configuration allows researchers to create a wide variety of experiments with minimal programming effort.
+    We show that this fine-grained data sheds new light on pruning strategies, and release the paradigm open-source as a jsPsych plugin \cite{DeLeeuw2015}.
+    % The flexible configuration allows researchers to create a wide variety of experiments with minimal programming effort.
   \end{block}
 
   % \begin{alertblock}{Key findings}\label{key-findings}
@@ -124,14 +125,22 @@
     Previous work has identified abstract planning strategies based on patterns of human errors \cite{Huys2015}.
     However, a process model of human planning remains elusive.
 
-    \textbf{Process-tracing paradigms} such as think-aloud protocols and eye tracking externalize some aspect of a cognitive process. \citeA{Payne1988} developed one such methodology for studying multi-alternative risky choice: In the ``Mouselab'' paradigm, a participant clicks on the cells of a matrix to inform a betting decision.
+    \textbf{Process-tracing paradigms} such as think-aloud protocols and eye tracking externalize some aspect of a cognitive process.
+    In the ``Mouselab'' paradigm \cite{Payne1988}, a participant clicks on the cells of a matrix to inform a betting decision.
+    By applying this idea to Markov decision processes (MDPs), we can gather fine-grained data that could inform process models of human planning.
+
   \end{block}
 
-  \begin{block}{Usage}\label{usage}
+  \begin{block}{Using Mouselab-MDP}\label{usage}
+    A Mouselab-MDP experiment can be run online or in the lab.
+    A JSON object specifies the MDP and its physical layout.
+    Additional parameters control how information about the MDP is displayed.
+    For example, the reward for traversing each edge could be visible only when the mouse is hovering over that edge (Fig.~1c).
+
     This CofeeScript code generates Fig.~\ref{fig:simple}
     \begin{Verbatim}[fontsize=\tiny]
       trial =
-        type: 'mouselab-mdp'  # use the jspsych plugin
+        type: 'mouselab-mdp'  # use the jsPsych plugin
         graph:  # defines transition and reward functions
           B:
             up: [5, 'A']
@@ -209,7 +218,7 @@
       \caption{}
     \end{subfigure}
     % \captionsetup{width=0.9\linewidth}
-    \caption[first]{Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. (a) Colors indicate how often each state was inspected before the first move, for four MDPs. b) The four most common click sets for one MDP. Inspected states are gold.}
+    \caption[first]{Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. (a) Colors indicate how often each state was inspected before the first move, for four MDPs. (b) The four most common click sets for one MDP. Inspected states are gold.}
   \end{figure}
 
 
@@ -281,11 +290,11 @@
     \label{fig:pruning}
     \includegraphics[width=0.9\linewidth]{figs/prunning_any_noFB.png}
     \captionsetup{width=0.9\linewidth}
-    \caption[first]{Frequency of pruning $\pm 1 \text{SEM}$ given the reward at the stem of the branch (horizontal axis). Pruning was defined as inspecting none of a branch's outer states (before the second move) after having inspected the reward at its stem (before the first move).}
+    \caption[first]{Frequency of pruning $\pm 1 \text{SEM}$ given the reward at the stem of the branch. Pruning was defined as inspecting none of a branch's outer states (before the second move) after having inspected the reward at its stem (before the first move).}
   \end{figure}
 
   \begin{block}{References}\label{references}
-    \bibliographystyle{apacite}
+    \bibliographystyle{unsrt}
     \renewcommand{\bibliographytypesize}{\small}
     % \setlength{\bibleftmargin}{.05in}
     % \setlength{\bibindent}{-\bibleftmargin}
