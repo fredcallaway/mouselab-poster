@@ -102,11 +102,11 @@
 %----------------------------------------------------------------------------------------
 
 \begin{column}{\onecolwid} % Begin column 1
-  \begin{block}{Motivation}\label{Motivation}
+  \begin{block}{Contribution}\label{contribution}
     Planning is a latent cognitive process that cannot be observed directly.
-    This makes it difficult to study how people plan.
-    To address this challenge, we propose a new paradigm that provides experimenters with a timecourse of participant attention to information in the task environment.
-
+    To address this challenge, we propose a new paradigm that tracks participants' information gathering in a planning task.
+    We release the paradigm open-source as a JsPsych plugin \cite{DeLeeuw2015}.
+    The flexible configuration allows researchers to create a wide variety of experiments with minimal programming effort.
   \end{block}
 
   % \begin{alertblock}{Key findings}\label{key-findings}
@@ -119,9 +119,12 @@
   % \end{alertblock}
 
   \begin{block}{Background}\label{Background}
-    Many problems that people face require planning many steps into the future. Brute force search quickly becomes computationally intractable, thus people must rely on \textbf{approximate planning strategies}. Characterizing these strategies is difficult becaues we cannot directly observe the search process. For example, although \citeA{Huys2015} successfully modeled a \textbf{pruning} strategy as discounting rewards after large penalties, they could not provide a detailed process model based on beahvioral data alone.
+    Many problems that people face require planning many steps into the future.
+    Brute force search quickly becomes computationally intractable, thus people must rely on \textbf{approximate planning strategies}.
+    Previous work has identified abstract planning strategies based on patterns of human errors \cite{Huys2015}.
+    However, a process model of human planning remains elusive.
 
-    \textbf{Process tracing paradigms} such as think-aloud protocols and eye tracking externalize some aspect of a cognitive process. \citeA{Payne1988} developed one such methodology for studying multi-alternative risky choice: In the ``Mouselab'' paradigm, a participant clicks on the cells of a matrix to inform a betting decision.
+    \textbf{Process-tracing paradigms} such as think-aloud protocols and eye tracking externalize some aspect of a cognitive process. \citeA{Payne1988} developed one such methodology for studying multi-alternative risky choice: In the ``Mouselab'' paradigm, a participant clicks on the cells of a matrix to inform a betting decision.
   \end{block}
 
   \begin{block}{Usage}\label{usage}
