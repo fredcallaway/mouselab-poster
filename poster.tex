@@ -106,10 +106,14 @@
 %----------------------------------------------------------------------------------------
 
 \begin{column}{\onecolwid} % Begin column 1
-  \begin{block}{Contribution}\label{contribution}
-    Planning is a latent cognitive process that cannot be observed directly.
-    To address this challenge, we propose a new paradigm that tracks participants' information gathering in a planning task.
-    We show that this fine-grained data sheds new light on pruning strategies, and release the paradigm open-source as a jsPsych plugin \cite{DeLeeuw2015}.
+  \begin{block}{Key points}\label{contribution}
+    \begin{itemize}
+      \item Planning is an unobservable cognitive process.
+      \item Studying unobservable things is hard.
+      \item Our novel paradigm tracks participants' information gathering in a planning task.
+      \item This data sheds new light on pruning.
+      \item We release the paradigm open-source as a jsPsych plugin \cite{DeLeeuw2015}.
+    \end{itemize}
     % The flexible configuration allows researchers to create a wide variety of experiments with minimal programming effort.
   \end{block}
 
@@ -123,43 +127,40 @@
   % \end{alertblock}
 
   \begin{block}{Background}\label{Background}
-    Many problems that people face require planning many steps into the future.
-    Brute force search quickly becomes computationally intractable, thus people must rely on \textbf{approximate planning strategies}.
-    Previous work has identified abstract planning strategies based on patterns of human errors \cite{Huys2015}.
-    However, a process model of human planning remains elusive.
+    \begin{itemize}
+      \item Many problems require planning into the distant future.
+            Brute force search is intractable, thus people must rely on \textbf{approximate planning strategies}.
+            Previous work has identified abstract planning strategies based on patterns of human errors \cite{Huys2015}.
+      \item \textbf{Process-tracing paradigms} externalize cognitive processes.
+            In the ``Mouselab'' paradigm \cite{Payne1988}, a participant clicks on the cells of a matrix to inform a betting decision. We apply this idea to MDPs.
+    \end{itemize}
 
-    \textbf{Process-tracing paradigms} such as think-aloud protocols and eye tracking externalize some aspect of a cognitive process.
-    In the ``Mouselab'' paradigm \cite{Payne1988}, a participant clicks on the cells of a matrix to inform a betting decision.
-    By applying this idea to Markov decision processes (MDPs), we can gather fine-grained data that could inform process models of human planning.
+    
 
   \end{block}
 
-  \begin{block}{Using Mouselab-MDP}\label{usage}
-    A Mouselab-MDP experiment runs in a browser and is thus written in JavaScript.
-    A JSON object specifies the MDP and its physical layout.
-    Additional parameters control how information about the MDP is displayed.
-    For example, the reward for traversing each edge could be visible only when the mouse is hovering over that edge (Fig.~1c).
-
-    This CofeeScript code generates Fig.~\ref{fig:simple}
-    \begin{Verbatim}[fontsize=\tiny]
-      trial =
-        type: 'mouselab-mdp'  # use the jsPsych plugin
-        graph:  # defines transition and reward functions
-          B:
-            up: [5, 'A']
-            down: [-5, 'C']
-          A: {}
-          C: {}
-        layout:  # defines position of states
-          A: [1, 1]
-          B: [1, 2]
-          C: [1, 3]
-        initial: 'B'  # initial state of player
-        stateLabels: {A: 'A', B: 'B', C: 'C'}
-        stateDisplay: 'always'  # options: never, hover, click, always
-        edgeLabels: 'reward'  # can also be an arbitrary mapping
-        edgeDisplay: 'click'  # options: never, hover, click, always
-        edgeClickCost: 1  # subtracted from score every time an edge is clicked
+  \begin{block}{Example code}\label{usage}
+    This CofeeScript code generates Fig.~\ref{fig:simple}.
+    \begin{Verbatim}[fontsize=\small]
+trial =  # a trial is defined by a JS object
+  type: 'mouselab-mdp'  # use the jsPsych plugin
+  graph:  # defines transition and reward functions
+    B:
+      up: [5, 'A']  # action: [reward, next_state]
+      down: [-5, 'C']
+    A: {}  # terminal states have no actions
+    C: {}
+  layout:  # defines position of states
+    A: [1, 1]
+    B: [1, 2]
+    C: [1, 3]
+  initial: 'B'  # initial state of player
+  stateLabels: {A: 'A', B: 'B', C: 'C'}
+  stateDisplay: 'always'  # never, hover, click, always
+  edgeLabels: 'reward'  # can be an arbitrary mapping
+  edgeDisplay: 'click'  # never, hover, click, always
+  edgeClickCost: 1  # subtracted from score whenever
+                    # an edge is clicked
     \end{Verbatim}
   \end{block}
 
@@ -168,7 +169,7 @@
 
 \begin{column}{\sepwid}\end{column} % Empty spacer column
 \begin{column}{\twocolwid} % Begin column 2
-
+  \vspace{-1cm}
   \begin{figure}
     \label{fig:main}
     \includegraphics[width=0.85\linewidth]{figs/example1.png}
@@ -184,24 +185,21 @@
       \centering
       \includegraphics[height=10cm]{figs/simple.png}
       \caption{}
-      % \caption{\textbf{Usage} example}
       \label{fig:simple}
     \end{subfigure}
     \begin{subfigure}{.38\textwidth}
       \centering
       \includegraphics[height=10cm]{figs/heart.png}
       \caption{}
-      % \caption{Large environments can be programatically generated.}
       \label{fig:heart}
     \end{subfigure}
     \begin{subfigure}{.28\textwidth}
       \centering
       \includegraphics[height=10cm]{figs/grid2.png}
       \caption{}
-      % \caption{Rewards can be displayed always, after being clicked, or only on hover.}
       \label{fig:hover}
     \end{subfigure}
-    \caption{(a) example in \textbf{Usage}; (b) a programatically generated layout; (c) rewards displayed on hover.}
+    \caption{(a) See \textbf{Example code}; (b) a programatically generated layout; (c) rewards displayed on hover.}
     \label{fig:test}
   \end{figure}
 
@@ -277,17 +275,23 @@
 \begin{column}{\onecolwid} % Begin column 3
 
   \begin{block}{Experiment}\label{experiment}
-  To demonstrate the paradigm in action, we designed a layout that encourages pruning (center image). 31 participants completed the online experiment. We set \texttt{stateLabels} to be the rewards associated with the edge leading to each state. We set \texttt{stateDisplay} to `click' and \texttt{stateClickCost} to 0.10; thus participants could click on a state to reveal the reward for traveling to that state, at the price of $\$0.10$. Participants were required to spend at least $45$ seconds on every trial to prevent time cost from discouraging participants from clicking and planning.
-
-  Our results provide \textbf{direct evidence of pruning}: participants were less likely to click on states after large rewards (Fig.~2). This effect \textbf{varies smoothly with reward} (Fig.~3).
-
+    \begin{itemize}
+      \item Proof-of-concept experiment run online ($N=31$)
+      \item Layout encourages pruning (center image)
+      \item Reward at each state revealed upon click
+      \item \$0.10 penalty for each click
+      \item Minimum of 45 seconds per trial
+      \item Clicking patterns provide \textbf{direct evidence of pruning}
+    \end{itemize}
   \end{block}
 
-  % \begin{alertblock}{Results}\label{results}
-  %   \begin{itemize}
-  %     \item Something about pruning.
-  %   \end{itemize}
-  % \end{alertblock}
+  \begin{block}{Results}\label{results}
+
+    \begin{itemize}
+      \item Fewer clicks on states after large costs (Fig.~2)
+      \item Effect varies smoothly with reward (Fig.~3)
+    \end{itemize}
+  \end{block}
 
   \begin{figure}
     \label{fig:pruning}
@@ -298,7 +302,7 @@
 
   \begin{block}{References}\label{references}
     \bibliographystyle{unsrt}
-    \renewcommand{\bibliographytypesize}{\small}
+    \tiny
     % \setlength{\bibleftmargin}{.05in}
     % \setlength{\bibindent}{-\bibleftmargin}
     \bibliography{references}
