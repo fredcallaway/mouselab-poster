@@ -143,8 +143,8 @@
 
   \begin{block}{Example code}\label{usage}
     This CofeeScript code generates Fig.~\ref{fig:simple}.
-    % \begin{Verbatim}[fontsize=\small]
-    \begin{minted}[fontsize=\small]{coffee}
+    \begin{Verbatim}[fontsize=\small]
+    % \begin{minted}[fontsize=\small]{coffee}
 trial =  # a trial is defined by a JS object
   type: 'mouselab-mdp'  # use the jsPsych plugin
   graph:  # defines transition and reward functions
@@ -164,8 +164,8 @@ trial =  # a trial is defined by a JS object
   edgeDisplay: 'click'  # never, hover, click, always
   edgeClickCost: 1  # subtracted from score whenever
                     # an edge is clicked
-    \end{minted}{coffee}
-    % \end{Verbatim}
+    % \end{minted}{coffee}
+    \end{Verbatim}
   \end{block}
 
 \end{column} % End column 1
@@ -208,23 +208,23 @@ trial =  # a trial is defined by a JS object
   \end{figure}
 
 
-  \begin{figure}
-    \centering
-    \begin{subfigure}{0.48\textwidth}
-      \centering
-      \label{fig:click_heat}
-      \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
-      \caption{}
-    \end{subfigure}
-    \begin{subfigure}{0.48\textwidth}
-      \centering
-      \label{fig:click_sets}
-      \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
-      \caption{}
-    \end{subfigure}
-    % \captionsetup{width=0.9\linewidth}
-    \caption[first]{Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. (a) Colors indicate how often each state was inspected before the first move, for four MDPs. (b) The four most common click sets for one MDP. Inspected states are gold.}
-  \end{figure}
+  % \begin{figure}
+  %   \centering
+  %   \begin{subfigure}{0.48\textwidth}
+  %     \centering
+  %     \label{fig:click_heat}
+  %     \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
+  %     \caption{}
+  %   \end{subfigure}
+  %   \begin{subfigure}{0.48\textwidth}
+  %     \centering
+  %     \label{fig:click_sets}
+  %     \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
+  %     \caption{}
+  %   \end{subfigure}
+  %   % \captionsetup{width=0.9\linewidth}
+  %   \caption[first]{Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. (a) Colors indicate how often each state was inspected before the first move, for four MDPs. (b) The four most common click sets for one MDP. Inspected states are gold.}
+  % \end{figure}
 
 
   % \begin{figure}
@@ -251,27 +251,54 @@ trial =  # a trial is defined by a JS object
 
 
 
-  % \begin{columns}[t,totalwidth=\twocolwid] % Split column 2 into 2.1 and 2.2
+  \begin{columns}[t,totalwidth=\twocolwid] % Split column 2 into 2.1 and 2.2
     
-    % \begin{column}{\onecolwid} % Begin column 2.1
-      
-      
+    \begin{column}{\onecolwid} % Begin column 2.1
+      \begin{minted}[fontsize=\small]{coffee}
+trial =  # a trial is defined by a JS object
+  type: 'mouselab-mdp'  # use the jsPsych plugin
+  graph:  # defines transition and reward functions
+    B:
+      up: [5, 'A']  # action: [reward, next_state]
+      down: [-5, 'C']
+    A: {}  # terminal states have no actions
+    C: {}
+  layout:  # defines position of states
+    A: [1, 1]
+    B: [1, 2]
+    C: [1, 3]
+  initial: 'B'  # initial state of player
+  stateLabels: {A: 'A', B: 'B', C: 'C'}
+  stateDisplay: 'always'  # never, hover, click, always
+  edgeLabels: 'reward'  # can be an arbitrary mapping
+  edgeDisplay: 'click'  # never, hover, click, always
+  edgeClickCost: 1  # subtracted from score whenever
+                    # an edge is clicked
+      \end{minted}{coffee}
 
-    % \end{column} % End column 2.1
+    \end{column} % End column 2.1
 
-  %   \begin{column}{\onecolwid} % Begin column 2.2
+    \begin{column}{\onecolwid} % Begin column 2.2
 
 
-  %     % \begin{figure}
-  %     %   % \label{fig:paradigm}
-  %     %   \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
-  %     %   % \captionsetup{width=0.9\linewidth}
-  %     %   % \caption[first]{Web of Cash experimental interface.}
-  %     % \end{figure}
+      % \begin{figure}
+      %   % \label{fig:paradigm}
+      %   \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
+      %   % \captionsetup{width=0.9\linewidth}
+      %   % \caption[first]{Web of Cash experimental interface.}
+      % \end{figure}
+
+        \begin{figure}
+          \centering
+          \label{fig:click_sets}
+          \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
+          \caption{The four most common click sets for one MDP. Inspected states are gold.}
+          % Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. 
+        \end{figure}
     
-  %   \end{column} % End column 2.2
+    \end{column} % End column 2.2
 
-  % \end{columns}
+  \end{columns}
 
 \end{column} % End column 2
 %------------------------------------------------------------------------------
