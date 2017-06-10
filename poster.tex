@@ -79,8 +79,8 @@
 
 % \author{Frederick Callaway, Falk Lieder, Paul M. Krueger, and Thomas L. Griffiths}
 
-\author{Frederick Callaway\first^*, Falk Lieder\first, Paul M. Krueger\first, and Thomas L. Griffiths}
-\institute{University of California, Berkeley \\ {\bf \first} {\small These authors contributed equally.\quad \textsuperscript{*} Correspondance: fredcallaway@berkeley.edu}}
+\author{Frederick Callaway\first, Falk Lieder\first, Paul M. Krueger\first, and Thomas L. Griffiths}
+\institute{University of California, Berkeley \\ {\bf \first} {\small These authors contributed equally.\quad Correspondance: fredcallaway@berkeley.edu}}
 
 \begin{document}
 
@@ -109,7 +109,7 @@
 \begin{column}{\onecolwid} % Begin column 1
   \begin{block}{Key points}\label{contribution}
     \begin{itemize}
-      \item Planning is an unobservable cognitive process.
+      \item Planning is difficult to study because it cannot be observed directly%is an unobservable cognitive process.
       %\item Studying unobservable things is hard.
       \item We introduce a novel paradigm that makes planning visible by tracking which states and transitions people inspect and in which order.
       \item This data sheds new light on pruning.
@@ -129,44 +129,33 @@
 
   \begin{block}{Background}\label{Background}
     \begin{itemize}
-      \item Many problems require planning into the distant future.
+      \item %
+            Many problems require planning into the distant future.
             %Brute force search is intractable, thus people must rely on \textbf{approximate planning strategies}.
             Previous work has identified %abstract
             \textbf{approximate planning strategies} based on patterns of human errors \cite{Huys2015}.
       \item \textbf{Process-tracing paradigms} externalize cognitive processes.
-            To trace decision strategies, the ``Mouselab'' paradigm \cite{Payne1988} requires people to click on cells of a payoff matrix to reveal the outcomes. We apply this idea to MDPs.
+            To trace decision strategies, the ``Mouselab'' paradigm \cite{Payne1988} requires people to click on cells of a payoff matrix to reveal the outcomes.
     \end{itemize}
 
     
 
   \end{block}
 
-  \begin{block}{Example code}\label{usage}
-    This CofeeScript code generates Fig.~\ref{fig:simple}.
-    \begin{Verbatim}[fontsize=\small]
-    % \begin{minted}[fontsize=\small]{coffee}
-trial =  # a trial is defined by a JS object
-  type: 'mouselab-mdp'  # use the jsPsych plugin
-  graph:  # defines transition and reward functions
-    B:
-      up: [5, 'A']  # action: [reward, next_state]
-      down: [-5, 'C']
-    A: {}  # terminal states have no actions
-    C: {}
-  layout:  # defines position of states
-    A: [1, 1]
-    B: [1, 2]
-    C: [1, 3]
-  initial: 'B'  # initial state of player
-  stateLabels: {A: 'A', B: 'B', C: 'C'}
-  stateDisplay: 'always'  # never, hover, click, always
-  edgeLabels: 'reward'  # can be an arbitrary mapping
-  edgeDisplay: 'click'  # never, hover, click, always
-  edgeClickCost: 1  # subtracted from score whenever
-                    # an edge is clicked
-    % \end{minted}{coffee}
-    \end{Verbatim}
-  \end{block}
+    \begin{block}{The Mouselab-MDP paradigm}\label{paradigm}
+    \begin{itemize}
+        \item Generalizes the Mouselab paradigm to MDPs.
+        \item MDPs are visualized as spatial environments
+        \item Planning can be traced  by hiding the rewards until the user clicks on or hovers over the corresponding state or arrow
+        % \item Process tracing data, responses, and reaction times are recorded automatically
+        \item Time series of clicks, mouse-over events, and moves are recorded automatically
+        \item The cost of computation can be externalized by charging participants for collecting information
+        \item The task is to maximize the sum of rewards minus the cost of planning
+        \item A wide range of environments and experiments can be created in just a few  lines of intuitive code (see Listing \ref{lst:the-code} and Figure \ref{fig:test})
+
+    \end{itemize}
+    \end{block}
+
 
 \end{column} % End column 1
 %------------------------------------------------------------------------------
@@ -208,90 +197,24 @@ trial =  # a trial is defined by a JS object
   \end{figure}
 
 
-  % \begin{figure}
-  %   \centering
-  %   \begin{subfigure}{0.48\textwidth}
-  %     \centering
-  %     \label{fig:click_heat}
-  %     \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
-  %     \caption{}
-  %   \end{subfigure}
-  %   \begin{subfigure}{0.48\textwidth}
-  %     \centering
-  %     \label{fig:click_sets}
-  %     \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
-  %     \caption{}
-  %   \end{subfigure}
-  %   % \captionsetup{width=0.9\linewidth}
-  %   \caption[first]{Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. (a) Colors indicate how often each state was inspected before the first move, for four MDPs. (b) The four most common click sets for one MDP. Inspected states are gold.}
-  % \end{figure}
-
-
-  % \begin{figure}
-  %   \centering
-  %   \begin{minipage}{.3\textwidth}
-  %     \centering
-  %     \includegraphics[height=10cm]{figs/simple.png}
-  %     \captionof{figure}{Example from \textbf{Usage}}
-  %     \label{fig:simple}
-  %   \end{minipage}%
-  %   \begin{minipage}{.4\textwidth}
-  %     \centering
-  %     \includegraphics[height=10cm]{figs/heart.png}
-  %     \captionof{figure}{Large environments can be programatically generated.}
-  %     \label{fig:heart}
-  %   \end{minipage}%
-  %   \begin{minipage}{.3\textwidth}
-  %     \centering
-  %     \includegraphics[height=10cm]{figs/grid2.png}
-  %     \captionof{figure}{Rewards can be displayed always, after being clicked, or only on hover.}
-  %     \label{fig:hover}
-  %   \end{minipage}
-  % \end{figure}
-
-
-
+  \vspace{-2cm}
   \begin{columns}[t,totalwidth=\twocolwid] % Split column 2 into 2.1 and 2.2
-    
     \begin{column}{\onecolwid} % Begin column 2.1
-      \begin{minted}[fontsize=\small]{coffee}
-trial =  # a trial is defined by a JS object
-  type: 'mouselab-mdp'  # use the jsPsych plugin
-  graph:  # defines transition and reward functions
-    B:
-      up: [5, 'A']  # action: [reward, next_state]
-      down: [-5, 'C']
-    A: {}  # terminal states have no actions
-    C: {}
-  layout:  # defines position of states
-    A: [1, 1]
-    B: [1, 2]
-    C: [1, 3]
-  initial: 'B'  # initial state of player
-  stateLabels: {A: 'A', B: 'B', C: 'C'}
-  stateDisplay: 'always'  # never, hover, click, always
-  edgeLabels: 'reward'  # can be an arbitrary mapping
-  edgeDisplay: 'click'  # never, hover, click, always
-  edgeClickCost: 1  # subtracted from score whenever
-                    # an edge is clicked
-      \end{minted}{coffee}
+      \begin{listing}[H]
+        \caption{CoffeeScript that generates Fig.~1a.}
+        \inputminted[fontsize=\small]{coffee}{example.coffee}
+        \label{lst:the-code}
+      \end{listing}
 
     \end{column} % End column 2.1
 
     \begin{column}{\onecolwid} % Begin column 2.2
 
-
-      % \begin{figure}
-      %   % \label{fig:paradigm}
-      %   \includegraphics[width=0.9\linewidth]{figs/click_locations_noFB_before1stFlight_small.png}
-      %   % \captionsetup{width=0.9\linewidth}
-      %   % \caption[first]{Web of Cash experimental interface.}
-      % \end{figure}
-
         \begin{figure}
           \centering
           \label{fig:click_sets}
           \includegraphics[width=0.9\linewidth]{figs/click_sets_trial4_noFB_small.png}
+          \captionsetup{width=0.9\linewidth}
           \caption{The four most common click sets for one MDP. Inspected states are gold.}
           % Human clicking patterns reveal pruning strategies. Each subplot shows the location and monetary value of each state. 
         \end{figure}
@@ -307,8 +230,8 @@ trial =  # a trial is defined by a JS object
 
   \begin{block}{Experiment}\label{experiment}
     \begin{itemize}
-      \item Proof-of-concept experiment run online ($N=31$)
-      \item Layout encourages pruning (center image)
+      \item Proof-of-concept online experiment ($N=31$)
+      \item Tree-shaped environment (center image)
       \item Reward at each state revealed upon click
       \item \$0.10 penalty for each click
       \item Minimum of 45 seconds per trial
@@ -316,10 +239,13 @@ trial =  # a trial is defined by a JS object
   \end{block}
 
   \begin{block}{Results}\label{results}
-    Clicking patterns provide \textbf{direct evidence of pruning}.
+  \begin{itemize}
+    \item Click sequences revealed a wide range of planning strategies (see examples in Fig.~2).
+    \item Clicking patterns provided \textbf{direct evidence of pruning}.
     \begin{itemize}
       \item Fewer clicks on states after large costs (Fig.~2)
       \item Effect varies smoothly with reward (Fig.~3)
+    \end{itemize}
     \end{itemize}
   \end{block}
 
@@ -327,7 +253,7 @@ trial =  # a trial is defined by a JS object
     \label{fig:pruning}
     \includegraphics[width=0.9\linewidth]{figs/prunning_any_noFB.png}
     \captionsetup{width=0.9\linewidth}
-    \caption[first]{Frequency of pruning $\pm 1 \text{SEM}$ given the reward at the stem of the branch. Pruning was defined as inspecting none of a branch's outer states (before the second move) after having inspected the reward at its stem (before the first move).}
+    \caption[first]{Frequency of pruning $\pm 1 \text{SEM}$ given the reward at the stem of the branch. We defined pruning as inspecting none of a branch's outer nodes (before move 2) after inspecting the reward at its stem (before move 1).}
   \end{figure}
 
   \begin{block}{References}\label{references}
