@@ -69,6 +69,7 @@
   \usepackage{fancyvrb}
   \usepackage{subcaption}
   \usepackage{natbib}
+  \usepackage{minted}
   \captionsetup{font=normalsize, labelfont=normalsize}
 
   % \setlength{\parskip}{10cm}
@@ -78,8 +79,8 @@
 
 % \author{Frederick Callaway, Falk Lieder, Paul M. Krueger, and Thomas L. Griffiths}
 
-\author{Frederick Callaway\first, Falk Lieder\first, Paul M. Krueger\first, and Thomas L. Griffiths}
-\institute{University of California, Berkeley \\ {\bf \first} {\small These authors contributed equally.}} % Institution(s)
+\author{Frederick Callaway\first^*, Falk Lieder\first, Paul M. Krueger\first, and Thomas L. Griffiths}
+\institute{University of California, Berkeley \\ {\bf \first} {\small These authors contributed equally.\quad \textsuperscript{*} Correspondance: fredcallaway@berkeley.edu}}
 
 \begin{document}
 
@@ -109,10 +110,10 @@
   \begin{block}{Key points}\label{contribution}
     \begin{itemize}
       \item Planning is an unobservable cognitive process.
-      \item Studying unobservable things is hard.
-      \item Our novel paradigm tracks participants' information gathering in a planning task.
+      %\item Studying unobservable things is hard.
+      \item We introduce a novel paradigm that makes planning visible by tracking which states and transitions people inspect and in which order.
       \item This data sheds new light on pruning.
-      \item We release the paradigm open-source as a jsPsych plugin \cite{DeLeeuw2015}.
+      \item We release the paradigm open-source as a jsPsych plugin \cite{DeLeeuw2015}: \texttt{https://github.com/fredcallaway/Mouselab-MDP}
     \end{itemize}
     % The flexible configuration allows researchers to create a wide variety of experiments with minimal programming effort.
   \end{block}
@@ -129,10 +130,11 @@
   \begin{block}{Background}\label{Background}
     \begin{itemize}
       \item Many problems require planning into the distant future.
-            Brute force search is intractable, thus people must rely on \textbf{approximate planning strategies}.
-            Previous work has identified abstract planning strategies based on patterns of human errors \cite{Huys2015}.
+            %Brute force search is intractable, thus people must rely on \textbf{approximate planning strategies}.
+            Previous work has identified %abstract
+            \textbf{approximate planning strategies} based on patterns of human errors \cite{Huys2015}.
       \item \textbf{Process-tracing paradigms} externalize cognitive processes.
-            In the ``Mouselab'' paradigm \cite{Payne1988}, a participant clicks on the cells of a matrix to inform a betting decision. We apply this idea to MDPs.
+            To trace decision strategies, the ``Mouselab'' paradigm \cite{Payne1988} requires people to click on cells of a payoff matrix to reveal the outcomes. We apply this idea to MDPs.
     \end{itemize}
 
     
@@ -141,7 +143,8 @@
 
   \begin{block}{Example code}\label{usage}
     This CofeeScript code generates Fig.~\ref{fig:simple}.
-    \begin{Verbatim}[fontsize=\small]
+    % \begin{Verbatim}[fontsize=\small]
+    \begin{minted}[fontsize=\small]{coffee}
 trial =  # a trial is defined by a JS object
   type: 'mouselab-mdp'  # use the jsPsych plugin
   graph:  # defines transition and reward functions
@@ -161,7 +164,8 @@ trial =  # a trial is defined by a JS object
   edgeDisplay: 'click'  # never, hover, click, always
   edgeClickCost: 1  # subtracted from score whenever
                     # an edge is clicked
-    \end{Verbatim}
+    \end{minted}{coffee}
+    % \end{Verbatim}
   \end{block}
 
 \end{column} % End column 1
@@ -281,12 +285,11 @@ trial =  # a trial is defined by a JS object
       \item Reward at each state revealed upon click
       \item \$0.10 penalty for each click
       \item Minimum of 45 seconds per trial
-      \item Clicking patterns provide \textbf{direct evidence of pruning}
     \end{itemize}
   \end{block}
 
   \begin{block}{Results}\label{results}
-
+    Clicking patterns provide \textbf{direct evidence of pruning}.
     \begin{itemize}
       \item Fewer clicks on states after large costs (Fig.~2)
       \item Effect varies smoothly with reward (Fig.~3)
@@ -314,9 +317,9 @@ trial =  # a trial is defined by a JS object
     \small{\rmfamily{\textbf{Funding}\; ONR MURI N00014-13-1-0341 and the Templeton World Charity Foundation.}}
   % \end{exampleblock}
 
-  \begin{flushright}
-    \texttt{fredcallaway@berkeley.edu}
-  \end{flushright}
+  %\begin{flushright}
+  %  \texttt{https://github.com/fredcallaway/Mouselab-MDP}
+  %\end{flushright}
 
 \end{column} % End column 3
 
